@@ -26,13 +26,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check-dco:
-    uses: ./.github/workflows/_wait_for_checks.yml
-    permissions:
-      checks: read
-    secrets: inherit
-    with:
-      match_pattern: "^DCO$"
   check-file-changes:
     runs-on: ubuntu-latest
     outputs:
@@ -53,15 +46,16 @@ jobs:
           files: |
             .github/workflows/unit_tests.yml
             modelopt/**
+            modelopt_recipes/**
             noxfile.py
             pyproject.toml
             tests/unit/**
+            tests/_test_utils/**
             tools/launcher/**
             tools/mcp/**
             tools/resource_monitor.py
             .agents/skills/**
   linux:
-    needs: [check-dco]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
